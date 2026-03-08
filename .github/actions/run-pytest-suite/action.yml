@@ -1,0 +1,41 @@
+name: Run Pytest Suite
+
+description: Run a pytest suite and generate JUnit XML + console output
+
+inputs:
+  test_path:
+    description: Test path or expression to run
+    required: true
+  report_dir:
+    description: Directory to store junit.xml and console.txt
+    required: true
+  run_ui:
+    description: Whether to enable UI execution
+    required: false
+    default: "false"
+  headless:
+    description: Playwright headless mode
+    required: false
+    default: "true"
+  slow_mo_ms:
+    description: Playwright slow motion delay in milliseconds
+    required: false
+    default: "0"
+  timeout_ms:
+    description: Playwright timeout in milliseconds
+    required: false
+    default: "45000"
+
+runs:
+  using: composite
+  steps:
+    - name: Run pytest suite
+      shell: bash
+      run: |
+        set -euo pipefail
+        mkdir -p "${{ inputs.report_dir }}"
+        export RUN_UI="${{ inputs.run_ui }}"
+        export HEADLESS="${{ inputs.headless }}"
+        export SLOW_MO_MS="${{ inputs.slow_mo_ms }}"
+        export TIMEOUT_MS="${{ inputs.timeout_ms }}"
+        pytest "${{ inputs.test_path }}" -q --junitxml="${{ inputs.report_dir }}/junit.xml" | tee "${{ inputs.report_dir }}/console.txt"

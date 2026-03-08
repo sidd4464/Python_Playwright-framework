@@ -61,6 +61,18 @@ If `pytest-html` is installed in your environment, HTML files are also generated
 - `reports/ui/report.html`
 - `reports/api/report.html`
 
+## GitHub Actions CI + PDF Reports
+
+This repo includes:
+- Workflow: `.github/workflows/ci.yml`
+- Reusable action: `.github/actions/run-pytest-suite/action.yml`
+- PDF generator: `scripts/generate_pdf_reports.py`
+
+The CI workflow runs UI and API suites separately, stores JUnit/console reports, and generates PDF summaries:
+- `reports/pdf/ui-summary.pdf`
+- `reports/pdf/api-summary.pdf`
+- `reports/pdf/combined-summary.pdf`
+
 ## Generate Allure Reports (Separate UI and API)
 
 ```powershell
