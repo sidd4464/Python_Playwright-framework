@@ -1,0 +1,18 @@
+[project]
+name = "parabank-e2e-framework"
+version = "0.1.0"
+description = "UI + API end-to-end automation framework for ParaBank"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "playwright>=1.52.0",
+  "pytest>=8.3.5",
+  "pytest-playwright>=0.7.0",
+  "requests>=2.32.3",
+  "allure-pytest>=2.13.5"
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra -p no:cacheprovider"
+testpaths = ["tests"]
+pythonpath = ["src"]
