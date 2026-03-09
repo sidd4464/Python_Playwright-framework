@@ -1,11 +1,10 @@
-import json
-import logging
 from urllib.parse import quote
 import xml.etree.ElementTree as ET
 
+from logging_utils import get_logger, payload_preview
 import requests
 
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 
 class ApiUnavailableError(RuntimeError):
@@ -54,7 +53,7 @@ def request_with_fallback(base_urls: list[str], method: str, path: str, timeout_
             response = requests.request(method=method, url=url, timeout=timeout_seconds)
             response.raise_for_status()
             payload = _parse_response(response)
-            logger.info("API success url=%s payload=%s", url, _payload_preview(payload))
+            logger.info("API success url=%s payload=%s", url, payload_preview(payload))
             return payload
         except Exception as exc:
             logger.warning("API failure url=%s reason=%s", url, exc)
@@ -72,13 +71,3 @@ def login(base_urls: list[str], username: str, password: str):
 def get_customer(base_urls: list[str], customer_id: int | str):
     logger.info("API customer fetch for customer_id=%s", customer_id)
     return request_with_fallback(base_urls, "GET", f"/customers/{customer_id}")
-
-
-def _payload_preview(payload: object, max_chars: int = 500) -> str:
-    try:
-        text = json.dumps(payload, ensure_ascii=True)
-    except TypeError:
-        text = str(payload)
-    if len(text) > max_chars:
-        return text[:max_chars] + "...(truncated)"
-    return text
