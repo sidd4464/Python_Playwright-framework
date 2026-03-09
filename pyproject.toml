@@ -16,3 +16,5 @@ dependencies = [
 addopts = "-ra -p no:cacheprovider"
 testpaths = ["tests"]
 pythonpath = ["src"]
+log_cli = true
+log_cli_level = "INFO"

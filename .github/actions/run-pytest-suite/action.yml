@@ -38,4 +38,8 @@ runs:
         export HEADLESS="${{ inputs.headless }}"
         export SLOW_MO_MS="${{ inputs.slow_mo_ms }}"
         export TIMEOUT_MS="${{ inputs.timeout_ms }}"
-        pytest "${{ inputs.test_path }}" -q --junitxml="${{ inputs.report_dir }}/junit.xml" | tee "${{ inputs.report_dir }}/console.txt"
+        pytest "${{ inputs.test_path }}" -v -s \
+          -o log_cli=true \
+          -o log_cli_level=INFO \
+          --junitxml="${{ inputs.report_dir }}/junit.xml" \
+          2>&1 | tee "${{ inputs.report_dir }}/console.txt"
