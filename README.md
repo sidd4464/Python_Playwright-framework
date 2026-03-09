@@ -73,22 +73,6 @@ The CI workflow runs UI and API suites separately, stores JUnit/console reports,
 - `reports/pdf/api-summary.pdf`
 - `reports/pdf/combined-summary.pdf`
 
-## Generate Allure Reports (Separate UI and API)
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\generate_allure_reports.ps1
-```
-
-Generated Allure result folders:
-- `reports/allure-results/ui`
-- `reports/allure-results/api`
-- `reports/allure-results/combined`
-
-If Allure CLI is installed, HTML reports are generated at:
-- `reports/allure-report/ui`
-- `reports/allure-report/api`
-- `reports/allure-report/combined`
-
 Notes:
 - If `RUN_UI=false`, UI and E2E tests are skipped.
 - If ParaBank API is unavailable (for example `522`), only API validation in E2E is skipped.
